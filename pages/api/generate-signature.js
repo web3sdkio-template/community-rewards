@@ -1,5 +1,5 @@
 import { unstable_getServerSession } from "next-auth/next";
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import { Web3sdkioSDK } from "@web3sdkio/sdk";
 import { authOptions } from "./auth/[...nextauth]";
 
 export default async function generateNftSignature(req, res) {
@@ -42,14 +42,14 @@ export default async function generateNftSignature(req, res) {
   }
 
   // NOTE: Using environment variables to store your private key is unsafe and not best practice.
-  // Learn how to store your private key securely here: https://portal.thirdweb.com/sdk/set-up-the-sdk/securing-your-private-key
+  // Learn how to store your private key securely here: https://portal.web3sdk.io/sdk/set-up-the-sdk/securing-your-private-key
   // This allows us (the contract owner) to control the generation of the mint signatures
   if (!process.env.PRIVATE_KEY) {
     throw new Error("You're missing PRIVATE_KEY in your .env.local file.");
   }
 
-  // Initialize the Thirdweb SDK on the serverside using the private key on the mumbai network
-  const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY, "mumbai");
+  // Initialize the Web3sdkio SDK on the serverside using the private key on the mumbai network
+  const sdk = Web3sdkioSDK.fromPrivateKey(process.env.PRIVATE_KEY, "mumbai");
 
   // Load the NFT Collection via it's contract address using the SDK
   const nftCollection = await sdk.getNFTCollection(
@@ -60,9 +60,9 @@ export default async function generateNftSignature(req, res) {
   const signedPayload = await nftCollection.erc721.signature.generate({
     to: claimerAddress,
     metadata: {
-      name: `thirdweb Discord Member NFT`,
+      name: `web3sdkio Discord Member NFT`,
       image: `${session.user.image}`,
-      description: `An NFT rewarded for being a part of the thirdweb community!`,
+      description: `An NFT rewarded for being a part of the web3sdkio community!`,
     },
   });
 

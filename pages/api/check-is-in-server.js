@@ -28,12 +28,12 @@ export default async function checkIsInServer(req, res) {
   // Filter all the servers to find the one we want
   // Returns undefined if the user is not a member of the server
   // Returns the server object if the user is a member
-  const thirdwebDiscordMembership = data?.find(
+  const web3sdkioDiscordMembership = data?.find(
     (server) => server.id === discordServerId
   );
 
   // Return undefined or the server object to the client.
   res
     .status(200)
-    .json({ thirdwebMembership: thirdwebDiscordMembership ?? undefined });
+    .json({ web3sdkioMembership: web3sdkioDiscordMembership ?? undefined });
 }

@@ -1,4 +1,4 @@
-import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
+import { useAddress, useDisconnect, useMetamask } from "@web3sdkio/react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import React from "react";
 import styles from "../styles/Theme.module.css";
@@ -62,7 +62,7 @@ export default function SignIn() {
 
         <p>
           <i>
-            (we check to see if you are a member of the thirdweb discord when
+            (we check to see if you are a member of the web3sdkio discord when
             you try to mint).
           </i>
         </p>

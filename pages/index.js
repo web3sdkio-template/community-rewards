@@ -1,4 +1,4 @@
-import { useAddress, useContract, Web3Button } from "@thirdweb-dev/react";
+import { useAddress, useContract, Web3Button } from "@web3sdkio/react";
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import SignIn from "../components/SignIn";
@@ -12,7 +12,7 @@ export default function Home() {
   // Get the currently authenticated user's session (Next Auth + Discord)
   const { data: session } = useSession();
 
-  // Get the NFT Collection we deployed using thirdweb+
+  // Get the NFT Collection we deployed using web3sdkio+
   const { contract: nftCollectionContract } = useContract(contractAddress);
 
   // This is simply a client-side check to see if the user is a member of the discord in /api/check-is-in-server
@@ -64,17 +64,17 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>thirdweb Community Rewards Example</h1>
+      <h1 className={styles.h1}>web3sdkio Community Rewards Example</h1>
 
       <p className={styles.explain}>
         An example project demonstrating how you can use{" "}
         <a
-          href="https://thirdweb.com/"
+          href="https://web3sdk.io/"
           target="_blank"
           rel="noopener noreferrer"
           className={styles.purple}
         >
-          thirdweb
+          web3sdkio
         </a>
         &apos;s signature-based minting to reward your community.
       </p>
@@ -101,7 +101,7 @@ export default function Home() {
             <div className={styles.nftPreview}>
               <b>Your NFT:</b>
               <img src={session?.user.image} />
-              <p>{session.user.name}&apos;s thirdweb Discord Member NFT</p>
+              <p>{session.user.name}&apos;s web3sdkio Discord Member NFT</p>
             </div>
 
             <Web3Button
@@ -118,7 +118,7 @@ export default function Home() {
             <p>Looks like you are not a part of the Discord server.</p>
             <a
               className={styles.mainButton}
-              href={`https://discord.com/invite/thirdweb`}
+              href={`https://discord.com/invite/web3sdkio`}
             >
               Join Server
             </a>
