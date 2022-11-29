@@ -2,19 +2,19 @@
 
 ## Introduction
 
-In this guide, we will utilize [signature-based minting](https://portal.web3sdk.io/advanced-features/on-demand-minting) of NFTs as a mechanism to reward users of a specific community. We connect user's with their Discord account, and generate signatures for an NFT if the user is a **member** of the Discord server.
+In this guide, we will utilize [signature-based minting](https://portal.thirdweb.com/advanced-features/on-demand-minting) of NFTs as a mechanism to reward users of a specific community. We connect user's with their Discord account, and generate signatures for an NFT if the user is a **member** of the Discord server.
 
-**Check out the Demo here**: https://community-rewards.web3sdkio-example.com
+**Check out the Demo here**: https://community-rewards.thirdweb-example.com
 
-If you're interested in reading the basics of signature-based minting, we recommend starting with this example repository: https://github.com/web3sdkio-example/signature-based-minting-next-ts
+If you're interested in reading the basics of signature-based minting, we recommend starting with this example repository: https://github.com/thirdweb-example/signature-based-minting-next-ts
 
 ## Tools:
 
-- [**React SDK**](https://docs.web3sdk.io/react): To connect to our NFT Collection Smart contract via React hooks such as [useNFTCollection](https://docs.web3sdk.io/react/react.usenftcollection), and allow users to sign in with [useMetamask](https://docs.web3sdk.io/react/react.usemetamask).
+- [**React SDK**](https://docs.thirdweb.com/react): To connect to our NFT Collection Smart contract via React hooks such as [useNFTCollection](https://docs.thirdweb.com/react/react.usenftcollection), and allow users to sign in with [useMetamask](https://docs.thirdweb.com/react/react.usemetamask).
 
-- [**NFT Collection**](https://portal.web3sdk.io/pre-built-contracts/nft-collection): This is the smart contract that our NFTs will be created into.
+- [**NFT Collection**](https://portal.thirdweb.com/pre-built-contracts/nft-collection): This is the smart contract that our NFTs will be created into.
 
-- [**TypeScript SDK**](https://docs.web3sdk.io/typescript): To mint new NFTs with [signature based minting](https://docs.web3sdk.io/typescript/sdk.nftcollection.signature)!
+- [**TypeScript SDK**](https://docs.thirdweb.com/typescript): To mint new NFTs with [signature based minting](https://docs.thirdweb.com/typescript/sdk.nftcollection.signature)!
 
 - [**Next JS API Routes**](https://nextjs.org/docs/api-routes/introduction): For us to securely generate signatures on the server-side, on behalf of our wallet, using our wallet's private key. As well as making server-side queries to the Discord APIs with the user's access token to view which servers they are part of.
 
@@ -22,17 +22,17 @@ If you're interested in reading the basics of signature-based minting, we recomm
 
 ## Using This Repo
 
-- Create an NFT Collection contract via the web3sdkio dashboard on the Polygon Mumbai (MATIC) test network.
+- Create an NFT Collection contract via the thirdweb dashboard on the Polygon Mumbai (MATIC) test network.
 
 - Create a project using this example by running:
 
 ```bash
-npx web3sdkio create --template community-rewards
+npx thirdweb create --template community-rewards
 ```
 
 - Find and replace our demo NFT Collection address (`0xb5201E87b17527722A641Ac64097Ece34B21d10A`) in this repository with your NFT Collection contract address from the dashboard.
 
-- We use the web3sdkio discord server ID `834227967404146718`. Find and replace instances of this ID with your own Discord server ID. You can learn how to get your Discord server ID from [this guide](https://www.alphr.com/discord-find-server-id/).
+- We use the thirdweb discord server ID `834227967404146718`. Find and replace instances of this ID with your own Discord server ID. You can learn how to get your Discord server ID from [this guide](https://www.alphr.com/discord-find-server-id/).
 
 ```bash
 npm install
@@ -58,7 +58,7 @@ You can see the basic flow of how signature based minting works in this applicat
 
 ![Signature Based Minting Diagram](https://camo.githubusercontent.com/bb1faa695e6c5968fb6f264ef49c3e3d3981e4a67654370b220b7bf491d69382/68747470733a2f2f63646e2e686173686e6f64652e636f6d2f7265732f686173686e6f64652f696d6167652f75706c6f61642f76313635303935383535393234392f53386d6c5a49515a6d2e706e67)
 
-In this example, we use signature-based minting to exclusively grant signatures to users who are members of the Discord server with ID `834227967404146718`; the web3sdkio discord server.
+In this example, we use signature-based minting to exclusively grant signatures to users who are members of the Discord server with ID `834227967404146718`; the thirdweb discord server.
 
 The general flow of the application is this:
 
@@ -76,13 +76,13 @@ In the below sections, we'll outline how each of these steps work and explain th
 
 We have a component that handles the sign in logic for both MetaMask and Discord in [/components/SignIn.js](/components/SignIn.js).
 
-For the MetaMask connection, we are using the [useMetamask](https://docs.web3sdk.io/react/react.usemetamask) hook from the web3sdkio React SDK.
+For the MetaMask connection, we are using the [useMetamask](https://docs.thirdweb.com/react/react.usemetamask) hook from the thirdweb React SDK.
 
 ```jsx
 const connectWithMetamask = useMetamask();
 ```
 
-This works because we have the `Web3sdkioProvider` setup in our [_app.js](/pages/_app.js) file, which allows us to use all of the web3sdkio React SDK's helpful hooks.
+This works because we have the `ThirdwebProvider` setup in our [_app.js](/pages/_app.js) file, which allows us to use all of the thirdweb React SDK's helpful hooks.
 
 ```jsx
 // This is the chainId your dApp will work on.
@@ -90,12 +90,12 @@ const activeChainId = ChainId.Mumbai;
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Web3sdkioProvider desiredChainId={activeChainId}>
+    <ThirdwebProvider desiredChainId={activeChainId}>
       {/* Next Auth Session Provider */}
       <SessionProvider session={pageProps.session}>
         <Component {...pageProps} />
       </SessionProvider>
-    </Web3sdkioProvider>
+    </ThirdwebProvider>
   );
 }
 ```
@@ -217,12 +217,12 @@ const discordServerId = "834227967404146718";
 // Filter all the servers to find the one we want
 // Returns undefined if the user is not a member of the server
 // Returns the server object if the user is a member
-const web3sdkioDiscordMembership = data?.find(
+const thirdwebDiscordMembership = data?.find(
   (server) => server.id === discordServerId
 );
 
 // Return undefined or the server object to the client.
-res.status(200).json({ web3sdkioMembership: web3sdkioDiscordMembership });
+res.status(200).json({ thirdwebMembership: thirdwebDiscordMembership });
 ```
 
 We then make a `fetch` request on the client to this API route on the [index.js](./pages/index.js) file:
@@ -261,7 +261,7 @@ data ? (
 ) : (
   <div>
     <p>Looks like you are not a part of the Discord server.</p>
-    <a href={`https://discord.com/invite/web3sdkio`}>Join Server</a>
+    <a href={`https://discord.com/invite/thirdweb`}>Join Server</a>
   </div>
 );
 ```
@@ -298,11 +298,11 @@ if (!discordMembership) {
 
 If the user is a member of the server, we can start the process of generating the signature for the NFT.
 
-Firstly, we initialize the web3sdkio SDK using our private key.
+Firstly, we initialize the thirdweb SDK using our private key.
 
 ```jsx
-// Initialize the Web3sdkio SDK on the serverside using the private key on the mumbai network
-const sdk = Web3sdkioSDK.fromPrivateKey(process.env.PRIVATE_KEY, "mumbai");
+// Initialize the Thirdweb SDK on the serverside using the private key on the mumbai network
+const sdk = ThirdwebSDK.fromPrivateKey(process.env.PRIVATE_KEY, "mumbai");
 ```
 
 You'll need another entry in your `.env.local` file, containing your private key for this to work.
@@ -331,9 +331,9 @@ We use the information of the user's Discord profile for the metadata of the NFT
 const signedPayload = await nftCollection.signature.generate({
   to: claimerAddress,
   metadata: {
-    name: `${session.user.name}'s Web3sdkio Discord Member NFT`,
+    name: `${session.user.name}'s Thirdweb Discord Member NFT`,
     image: `${session.user.image}`,
-    description: `An NFT rewarded to ${session.user.name} for being a part of the web3sdkio community!`,
+    description: `An NFT rewarded to ${session.user.name} for being a part of the thirdweb community!`,
   },
 });
 ```
@@ -384,4 +384,4 @@ NEXTAUTH_SECRET=<your-value-here>
 
 ## Join our Discord!
 
-For any questions, suggestions, join our discord at [https://discord.gg/cd web3sdkio](https://discord.gg/web3sdkio).
+For any questions, suggestions, join our discord at [https://discord.gg/cd thirdweb](https://discord.gg/thirdweb).
