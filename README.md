@@ -2,17 +2,17 @@
 
 ## Introduction
 
-In this guide, we will utilize [signature-based minting](https://portal.web3sdk.io/advanced-features/on-demand-minting) of NFTs as a mechanism to reward users of a specific community. We connect user's with their Discord account, and generate signatures for an NFT if the user is a **member** of the Discord server.
+In this guide, we will utilize [signature-based minting](https://docs.web3sdk.io/advanced-features/on-demand-minting) of NFTs as a mechanism to reward users of a specific community. We connect user's with their Discord account, and generate signatures for an NFT if the user is a **member** of the Discord server.
 
-**Check out the Demo here**: https://community-rewards.web3sdkio-example.com
+**Check out the Demo here**: https://community-rewards.web3sdkio-template.com
 
-If you're interested in reading the basics of signature-based minting, we recommend starting with this example repository: https://github.com/web3sdkio-example/signature-based-minting-next-ts
+If you're interested in reading the basics of signature-based minting, we recommend starting with this example repository: https://github.com/web3sdkio-template/signature-based-minting-next-ts
 
 ## Tools:
 
 - [**React SDK**](https://docs.web3sdk.io/react): To connect to our NFT Collection Smart contract via React hooks such as [useNFTCollection](https://docs.web3sdk.io/react/react.usenftcollection), and allow users to sign in with [useMetamask](https://docs.web3sdk.io/react/react.usemetamask).
 
-- [**NFT Collection**](https://portal.web3sdk.io/pre-built-contracts/nft-collection): This is the smart contract that our NFTs will be created into.
+- [**NFT Collection**](https://docs.web3sdk.io/pre-built-contracts/nft-collection): This is the smart contract that our NFTs will be created into.
 
 - [**TypeScript SDK**](https://docs.web3sdk.io/typescript): To mint new NFTs with [signature based minting](https://docs.web3sdk.io/typescript/sdk.nftcollection.signature)!
 
@@ -384,4 +384,4 @@ NEXTAUTH_SECRET=<your-value-here>
 
 ## Join our Discord!
 
-For any questions, suggestions, join our discord at [https://discord.gg/cd web3sdkio](https://discord.gg/web3sdkio).
+For any questions, suggestions, join our discord at [https://discord.gg/cd web3sdkio](https://discord.gg/n33UhsfUKB).
